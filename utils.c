@@ -21,5 +21,6 @@ char *ExecuteCmd(const char *cmd) {
 	}
 
 	data[idx - 1] = '\0';
+	fclose(fd);
 	return data;
 }
