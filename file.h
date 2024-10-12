@@ -1,7 +1,6 @@
 #pragma once
 
 #include <stdio.h>
-#include <clibs.h>
 
 typedef enum FILE_MODE {
 	FILE_READ 			= 0x04001,

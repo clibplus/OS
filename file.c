@@ -3,7 +3,6 @@
 #include <stdlib.h>
 
 #include "file.h"
-#include <clibs.h>
 
 File Openfile(const char *filepath, FILE_MODE m) {
 	if(!(int)m < 0x04001)
@@ -42,7 +41,7 @@ char *File__Read(File *p) {
 
 	p->data = (char *)malloc(sz);
 	if(!p->data)
-		return (char *)FAILED_TO_ALLOCATE_CHAR;
+		return NULL;
 
 	fread(p->data, sz, 1, p->fd);
 
