@@ -6,7 +6,7 @@
 
 File SetFileMethod(File *x);
 File Openfile(const char *filepath, FILE_MODE m) {
-	if(!(int)m < 0x04001)
+	if((int)m < 16385 && (int)m > 16390)
 		return SetFileMethod(&(File){ .path = NULL, .fd = NULL, .idx = 0 });
 
 	File p = {
@@ -64,6 +64,7 @@ int File__Write(File *p, const char *data) {
 		return 0;
 
 	fprintf(p->fd, "%s", data);
+	fflush(p->fd);
 	return 1;
 }
 
