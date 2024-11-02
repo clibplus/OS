@@ -4,14 +4,16 @@
 
 #include "file.h"
 
+File SetFileMethod(File *x);
 File Openfile(const char *filepath, FILE_MODE m) {
 	if(!(int)m < 0x04001)
-		return (File){ .path = NULL, .fd = NULL, .idx = 0 };
+		return SetFileMethod(&(File){ .path = NULL, .fd = NULL, .idx = 0 });
 
 	File p = {
 		.path 	= (char *)filepath,
 		.idx	= 0,
-		.Read	= File__Read
+		.Read	= File__Read,
+		.Write 	= File__Write,
 	};
 
 	const char *mode;
@@ -26,9 +28,16 @@ File Openfile(const char *filepath, FILE_MODE m) {
 
 	p.fd = fopen(filepath, mode);
 	if(!p.fd)
-		return (File){ .path = NULL, .fd = NULL, .idx = 0 };
+		return SetFileMethod(&(File){ .path = NULL, .fd = NULL, .idx = 0 });
 
 	return p;
+}
+
+File SetFileMethod(File *x) {
+	x->Read		= File__Read;
+	x->Write 	= File__Write;
+
+	return *x;
 }
 
 char *File__Read(File *p) {
@@ -48,7 +57,7 @@ char *File__Read(File *p) {
 	return p->data;
 }
 
-int Write(File *p, const char *data) {
+int File__Write(File *p, const char *data) {
 	if(!p || !p->fd)
 		return 0;
 

@@ -39,7 +39,7 @@ char 		*File__Read(File *p);
 //			| - > Write to file
 //			| - > Returns 1 upon success or 0 upon failure
 //
-int 		Write(File *p, const char *data);
+int 		File__Write(File *p, const char *data);
 
 //
 //			| - > Destroy the struct
