@@ -10,10 +10,11 @@ File Openfile(const char *filepath, FILE_MODE m) {
 		return SetFileMethod(&(File){ .path = NULL, .fd = NULL, .idx = 0 });
 
 	File p = {
-		.path 	= (char *)filepath,
-		.idx	= 0,
-		.Read	= File__Read,
-		.Write 	= File__Write,
+		.path 		= (char *)filepath,
+		.idx		= 0,
+		.Read		= File__Read,
+		.Write 		= File__Write,
+		.Destruct 	= DestructFile
 	};
 
 	const char *mode;
