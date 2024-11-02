@@ -37,6 +37,7 @@ File Openfile(const char *filepath, FILE_MODE m) {
 File SetFileMethod(File *x) {
 	x->Read		= File__Read;
 	x->Write 	= File__Write;
+	x->Destruct = DestructFile;
 
 	return *x;
 }
