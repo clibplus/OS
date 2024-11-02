@@ -10,7 +10,7 @@ File Openfile(const char *filepath, FILE_MODE m) {
 		return SetFileMethod(&(File){ .path = NULL, .fd = NULL, .idx = 0 });
 
 	File p = {
-		.path 		= (char *)filepath,
+		.path 		= strdup(filepath),
 		.idx		= 0,
 		.Read		= File__Read,
 		.Write 		= File__Write,
@@ -46,14 +46,14 @@ char *File__Read(File *p) {
 		return NULL;
 
 	fseek(p->fd, 0L, SEEK_END);
-	long sz = ftell(p->fd);
+	p->idx = ftell(p->fd);
 	fseek(p->fd, 0L, SEEK_SET);
 
-	p->data = (char *)malloc(sz);
+	p->data = (char *)malloc(p->idx);
 	if(!p->data)
 		return NULL;
 
-	fread(p->data, sz, 1, p->fd);
+	fread(p->data, p->idx, 1, p->fd);
 
 	return p->data;
 }
@@ -78,6 +78,4 @@ void DestructFile(File *p) {
 
 	if(p->data)
 		free(p->data);
-
-	free(p);
 }
