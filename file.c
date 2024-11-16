@@ -18,13 +18,13 @@ File Openfile(const char *filepath, FILE_MODE m) {
 	};
 
 	const char *mode;
-	switch((int)m) {
-		case FILE_READ: 		{ mode = "r"; }
-		case FILE_WRITE: 		{ mode = "w"; }
-		case FILE_APPEND: 		{ mode = "a"; }
-		case FILE_READ_WRITE: 	{ mode = "r+"; }
-		case FILE_WRITE_READ: 	{ mode = "w+"; }
-		case FILE_APPEND_READ:	{ mode = "a+"; }
+	switch(m) {
+		case FILE_READ: 		{ mode = "r"; break; }
+		case FILE_WRITE: 		{ mode = "w"; break; }
+		case FILE_APPEND: 		{ mode = "a"; break; }
+		case FILE_READ_WRITE: 	{ mode = "r+"; break; }
+		case FILE_WRITE_READ: 	{ mode = "w+"; break; }
+		case FILE_APPEND_READ:	{ mode = "a+"; break; }
 	}
 
 	p.fd = fopen(filepath, mode);
@@ -50,7 +50,8 @@ char *File__Read(File *p) {
 	p->idx = ftell(p->fd);
 	fseek(p->fd, 0L, SEEK_SET);
 
-	p->data = (char *)malloc(p->idx);
+	p->data = (char *)malloc(p->idx + 1);
+	memset(p->data, '\0', p->idx + 1);
 	if(!p->data)
 		return NULL;
 
